@@ -44,5 +44,5 @@ $ npm start
 $ cd golang-gateway
 
 # run the app
-$ 	python user_server.py
+$ python user_server.py
 ```
