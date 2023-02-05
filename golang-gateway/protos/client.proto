@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option go_package = "google.golang.org/grpc/examples/route_guide/routeguide";
+package client;
+
+service AuthService {
+  rpc Register (RegisterMsg) returns (AuthResponse);
+  rpc Login (LoginMsg) returns (LoginResponse);
+  rpc UpdateUser (UpdateUserMsg) returns (UpdateUserResponse) {} 
+}
+
+message RegisterMsg {
+  string username = 1;
+  string password = 2;
+  string email = 4;
+  string full_name = 5;
+}
+
+message LoginMsg {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    bool success = 1;
+    string token = 2;
+    string expires = 3;
+}
+
+message UpdateUserMsg {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string fullname = 4;
+}
+
+message AuthResponse {
+    string message = 1;
+}
+
+message UpdateUserResponse {
+    string id = 1;
+    string username = 2;
+    string email = 3;
+    string full_name = 4;
+}
