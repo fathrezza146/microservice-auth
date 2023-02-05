@@ -4,6 +4,7 @@ import { AuthDoc } from 'src/interface/auth-document.interface';
 import { LoginResponse, RegisterMsg } from 'src/interface/auth.interface';
 import { hashSync, compareSync } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import { authConfig } from 'src/config/config';
 
 
 const saltRounds = 10;
@@ -12,8 +13,8 @@ const saltRounds = 10;
 export class AuthService {
   constructor(@Inject('USER_MODEL')private readonly authUser: Model<AuthDoc>){}
   async registerUser(user: RegisterMsg): Promise<boolean> {
-    const checkUser = await this.authUser.findOne({username: user.username}).exec()
-    if (checkUser._id != "") {
+    const checkUser = await this.authUser.findOne({username: user.username}).exec()    
+    if (checkUser) {
       throw new Error("Registration Failed")
     }
 
@@ -49,7 +50,7 @@ export class AuthService {
 
     const expired = new Date()
     expired.setDate(expired.getDate() + 7);
-    const token = sign(payload, "v3rys3cr3t", {expiresIn: '7d'})
+    const token = sign(payload, authConfig.secret, {expiresIn: '7d'})
 
     return {
       success: true,

@@ -1,4 +1,5 @@
 import mongoose, { Connection } from "mongoose";
+import { authConfig } from "src/config/config";
 import { AuthUserSchema } from "src/schema/auth.schema";
 
 export const authProviders = [
@@ -13,6 +14,6 @@ export const databaseProviders = [
     {
       provide: 'DATABASE_CONNECTION',
       useFactory: (): Promise<typeof mongoose> =>
-        mongoose.connect('mongodb://localhost:27017/auth_service'),
+        mongoose.connect(`mongodb://localhost:${authConfig.dbhost}/auth_service`),
     },
   ];
